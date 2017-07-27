@@ -3,6 +3,7 @@ from threading import Thread
 import os
 import subprocess
 import signal
+import shutil
 
 app = Flask(__name__)
 GIT_URL = 'https://github.com/Grungnie/beercaddy'
@@ -36,7 +37,7 @@ def build_app():
 
     # blow away program
     try:
-        subprocess.call('rm -R {}'.format(REPO_NAME), shell=True)
+        shutil.rmtree('{}/{}'.format(PROGRAM_ROOT, REPO_NAME))
     except:
         print('No folder')
 
@@ -51,7 +52,7 @@ def build_app():
     subprocess.call('source venv/bin/activate', shell=True)
 
     # install requiremnets.txt
-    subprocess.call('pip install requirements.txt', shell=True)
+    subprocess.call('pip install -r requirements.txt', shell=True)
 
     # run program
     g.sleeping = subprocess.Popen('python main.py', shell=True, stdout=subprocess.PIPE, preexec_fn=os.setsid)

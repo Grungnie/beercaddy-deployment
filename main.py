@@ -22,7 +22,10 @@ def build():
         os.chdir(PROGRAM_ROOT)
 
         # blow away program
-        subprocess.call('rm -R {}'.format(REPO_NAME), shell=True)
+        try:
+            subprocess.call('rm -R {}'.format(REPO_NAME), shell=True)
+        except:
+            print('No folder')
 
         # clone repo
         subprocess.call('git clone {}'.format(GIT_URL), shell=True)
@@ -39,6 +42,8 @@ def build():
 
         # run program
         g.sleeping = subprocess.Popen('python main.py', shell=True, stdout=subprocess.PIPE, preexec_fn=os.setsid)
+    else:
+        print('{} is not a valid git url'.format(request.get_json()['repository']['url']))
 
     # return a response
     resp = Response()

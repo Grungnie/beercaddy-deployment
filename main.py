@@ -4,7 +4,7 @@ import subprocess
 import signal
 
 app = Flask(__name__)
-GIT_URL = 'git://github.com/Grungnie/beercaddy.git'
+GIT_URL = 'https://github.com/Grungnie/beercaddy'
 PROGRAM_ROOT = '/home/skippy/PycharmProjects'
 REPO_NAME = 'beercaddy'
 

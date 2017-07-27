@@ -5,7 +5,7 @@ import signal
 
 app = Flask(__name__)
 GIT_URL = 'https://github.com/Grungnie/beercaddy'
-PROGRAM_ROOT = '/home/skippy/PycharmProjects'
+PROGRAM_ROOT = '/pi/home'
 REPO_NAME = 'beercaddy'
 
 @app.route("/build", methods=['POST'])

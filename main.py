@@ -5,13 +5,14 @@ import signal
 
 app = Flask(__name__)
 GIT_URL = 'https://github.com/Grungnie/beercaddy'
-PROGRAM_ROOT = '/pi/home'
+PROGRAM_ROOT = '/home/pi'
 REPO_NAME = 'beercaddy'
 
 @app.route("/build", methods=['POST'])
 def build():
+    request_json = request.get_json()
 
-    if request.get_json()['repository']['url'] == GIT_URL:
+    if 'repository' in request_json and 'url' in request_json['repository'] and request_json['repository']['url'] == GIT_URL:
         # Kill current python process - how???
         try:
             os.killpg(os.getpgid(g.sleeping.pid), signal.SIGTERM)

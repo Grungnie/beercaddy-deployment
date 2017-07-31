@@ -30,7 +30,7 @@ def build_app():
     try:
         os.killpg(os.getpgid(g.sleeping.pid), signal.SIGTERM)
     except:
-        print('Looks like nothong was running')
+        print('Looks like nothing was running')
 
     # cd to root dir
     os.chdir(PROGRAM_ROOT)
@@ -44,19 +44,12 @@ def build_app():
     # clone repo
     subprocess.call('git clone {}'.format(GIT_URL), shell=True)
 
-    # cd into dir
-    os.chdir('{}/{}'.format(PROGRAM_ROOT, REPO_NAME))
-
-    # create virtualenv
-    subprocess.call('virtualenv -p python3 venv', shell=True)
-    subprocess.call('source venv/bin/activate', shell=True)
-
-    # install requiremnets.txt
-    subprocess.call('pip install -r requirements.txt', shell=True)
-
-    # run program
-    g.sleeping = subprocess.Popen('python main.py', shell=True, stdout=subprocess.PIPE, preexec_fn=os.setsid)
-
+    # run the sh script
+    g.sleeping = subprocess.Popen(['{}/{}/build.sh'.format(PROGRAM_ROOT, REPO_NAME),
+                                   '{}/{}'.format(PROGRAM_ROOT, REPO_NAME)],
+                                  shell=True,
+                                  stdout=subprocess.PIPE,
+                                  preexec_fn=os.setsid)
 
 if __name__ == '__main__':
     app.run(debug=True)

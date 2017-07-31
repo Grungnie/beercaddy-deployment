@@ -27,7 +27,10 @@ def build():
 
 
 def build_app():
-    cache = JsonCache()
+    # cd to root dir
+    os.chdir(PROGRAM_ROOT)
+
+    cache = JsonCache(root_directory='beercaddy-development')
 
     # Kill current python process - how???
     try:
@@ -35,9 +38,6 @@ def build_app():
     except Exception as e:
         print('Kill Exception')
         print(e)
-
-    # cd to root dir
-    os.chdir(PROGRAM_ROOT)
 
     # blow away program
     try:

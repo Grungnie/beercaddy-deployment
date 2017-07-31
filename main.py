@@ -46,8 +46,7 @@ def build_app():
 
     # run the sh script
     with app.app_context():
-        g.sleeping = subprocess.Popen(['{}/beercaddy-deployment/build.sh'.format(PROGRAM_ROOT),
-                                       '{}/{}'.format(PROGRAM_ROOT, REPO_NAME)],
+        g.sleeping = subprocess.Popen('{0}/beercaddy-deployment/build.sh {0}/{1}'.format(PROGRAM_ROOT, REPO_NAME),
                                       shell=True,
                                       stdout=subprocess.PIPE,
                                       preexec_fn=os.setsid)

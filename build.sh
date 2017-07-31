@@ -1,6 +1,7 @@
 #!/bin/bash
 
 root=$1
+echo $root
 
 virtualenv -p python3 $root/venv
 source $root/venv/bin/activate

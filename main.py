@@ -4,6 +4,7 @@ import os
 import subprocess
 import signal
 import shutil
+from cache import JsonCache
 
 app = Flask(__name__)
 GIT_URL = 'https://github.com/Grungnie/beercaddy'
@@ -26,10 +27,12 @@ def build():
 
 
 def build_app():
+    cache = JsonCache()
+
     # Kill current python process - how???
     with app.app_context():
         try:
-            os.killpg(os.getpgid(g.sleeping.pid), signal.SIGTERM)
+            os.killpg(cache.get('pgid'), signal.SIGTERM)
         except Exception as e:
             print('Kill Exception')
             print(e)
@@ -48,10 +51,12 @@ def build_app():
 
     # run the sh script
     with app.app_context():
-        g.sleeping = subprocess.Popen('{0}/beercaddy-deployment/build.sh {0}/{1}'.format(PROGRAM_ROOT, REPO_NAME),
-                                      shell=True,
-                                      stdout=subprocess.PIPE,
-                                      preexec_fn=os.setsid)
+        sleeping = subprocess.Popen('{0}/beercaddy-deployment/build.sh {0}/{1}'.format(PROGRAM_ROOT, REPO_NAME),
+                                    shell=True,
+                                    stdout=subprocess.PIPE,
+                                    preexec_fn=os.setsid)
+
+        cache.set('pgid', os.getpgid(sleeping.pid))
 
     print('Completed build')
 

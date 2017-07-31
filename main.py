@@ -30,12 +30,11 @@ def build_app():
     cache = JsonCache()
 
     # Kill current python process - how???
-    with app.app_context():
-        try:
-            os.killpg(cache.get('pgid'), signal.SIGTERM)
-        except Exception as e:
-            print('Kill Exception')
-            print(e)
+    try:
+        os.killpg(int(cache.get('pgid')), signal.SIGTERM)
+    except Exception as e:
+        print('Kill Exception')
+        print(e)
 
     # cd to root dir
     os.chdir(PROGRAM_ROOT)
@@ -50,13 +49,12 @@ def build_app():
     subprocess.call('git clone {}'.format(GIT_URL), shell=True)
 
     # run the sh script
-    with app.app_context():
-        sleeping = subprocess.Popen('{0}/beercaddy-deployment/build.sh {0}/{1}'.format(PROGRAM_ROOT, REPO_NAME),
-                                    shell=True,
-                                    stdout=subprocess.PIPE,
-                                    preexec_fn=os.setsid)
+    sleeping = subprocess.Popen('{0}/beercaddy-deployment/build.sh {0}/{1}'.format(PROGRAM_ROOT, REPO_NAME),
+                                shell=True,
+                                stdout=subprocess.PIPE,
+                                preexec_fn=os.setsid)
 
-        cache.set('pgid', os.getpgid(sleeping.pid))
+    cache.set('pgid', os.getpgid(sleeping.pid))
 
     print('Completed build')
 

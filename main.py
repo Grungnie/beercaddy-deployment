@@ -27,11 +27,12 @@ def build():
 
 def build_app():
     # Kill current python process - how???
-    try:
-        os.killpg(os.getpgid(g.sleeping.pid), signal.SIGTERM)
-    except Exception as e:
-        print('Kill Exception')
-        print(e)
+    with app.app_context():
+        try:
+            os.killpg(os.getpgid(g.sleeping.pid), signal.SIGTERM)
+        except Exception as e:
+            print('Kill Exception')
+            print(e)
 
     # cd to root dir
     os.chdir(PROGRAM_ROOT)

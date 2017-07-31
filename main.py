@@ -45,7 +45,7 @@ def build_app():
     subprocess.call('git clone {}'.format(GIT_URL), shell=True)
 
     # run the sh script
-    g.sleeping = subprocess.Popen(['{}/{}/build.sh'.format(PROGRAM_ROOT, REPO_NAME),
+    g.sleeping = subprocess.Popen(['{}/beercaddy-deployment/build.sh'.format(PROGRAM_ROOT),
                                    '{}/{}'.format(PROGRAM_ROOT, REPO_NAME)],
                                   shell=True,
                                   stdout=subprocess.PIPE,

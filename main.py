@@ -29,8 +29,9 @@ def build_app():
     # Kill current python process - how???
     try:
         os.killpg(os.getpgid(g.sleeping.pid), signal.SIGTERM)
-    except:
-        print('Looks like nothing was running')
+    except Exception as e:
+        print('Kill Exception')
+        print(e)
 
     # cd to root dir
     os.chdir(PROGRAM_ROOT)

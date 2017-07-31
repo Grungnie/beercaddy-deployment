@@ -53,6 +53,8 @@ def build_app():
                                       stdout=subprocess.PIPE,
                                       preexec_fn=os.setsid)
 
+    print('Completed build')
+
 if __name__ == '__main__':
     app.run(debug=True)
 

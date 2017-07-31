@@ -14,5 +14,4 @@ control c
 git pull
 gunicorn main:app -b 127.0.0.1:8080
 sudo service nginx start
-
 ```

@@ -30,7 +30,7 @@ def build_app():
     # cd to root dir
     os.chdir(PROGRAM_ROOT)
 
-    cache = JsonCache(root_directory='./beercaddy-development')
+    cache = JsonCache(root_directory='{}/beercaddy-development'.format(PROGRAM_ROOT))
 
     # Kill current python process - how???
     try:

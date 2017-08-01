@@ -2,7 +2,7 @@ import os
 import json
 
 
-class JsonCache():
+class JsonCache:
     def __init__(self, filename='cache.json', root_directory=None):
         if root_directory is not None:
             self.data_location = '{}/{}'.format(root_directory, filename)
